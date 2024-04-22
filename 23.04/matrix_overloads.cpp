@@ -72,7 +72,7 @@ class Matrix
 			}
 			return tmpMatrix;
 		}
-		
+
 		~Matrix()
 		{
 			std::cout << "Dtor called" << std::endl;
@@ -120,8 +120,8 @@ class Matrix
 		}
 
 	private:
-		int		_rows;
-		int		_cols;
+		int	_rows;
+		int	_cols;
 		int**	_matrix;
 
 };
