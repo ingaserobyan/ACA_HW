@@ -34,7 +34,7 @@ class Matrix
 			}
 		}
 
-		Matrix& operator = (const Matrix& matrix)
+		Matrix& operator= (const Matrix& matrix)
 		{
 			std::cout << " OPERATOR= called" << std::endl;
 			if (this == &matrix)
