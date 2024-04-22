@@ -57,13 +57,6 @@ class Matrix
 			return *this;
 		}
 
-		~Matrix()
-		{
-			std::cout << "Dtor called" << std::endl;
-			deleteMatrix(_matrix, _rows);
-			_matrix = nullptr;
-		}
-
 		Matrix operator+ (const Matrix& matrix)
 		{
 			std::cout << " OPERATOR+ ctor called" << std::endl;
@@ -79,6 +72,14 @@ class Matrix
 			}
 			return tmpMatrix;
 		}
+		
+		~Matrix()
+		{
+			std::cout << "Dtor called" << std::endl;
+			deleteMatrix(_matrix, _rows);
+			_matrix = nullptr;
+		}
+
 
 	public:
 		void display()
