@@ -52,8 +52,8 @@ class CarPlate
 
 	private:
 		int		_regionCode;
-		std::string _letters;
-		int 	_lastDigits;
+		std::string	_letters;
+		int		_lastDigits;
 };
 
 class Car
