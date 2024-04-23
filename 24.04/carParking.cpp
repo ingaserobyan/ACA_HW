@@ -21,7 +21,7 @@ class Person
 	private:
 		std::string	_name;
 		std::string	_surname;
-		bool	_driverLisance;
+		bool		_driverLisance;
 
 };
 
@@ -51,9 +51,9 @@ class CarPlate
 	}
 
 	private:
-		int	_regionCode;
+		int			_regionCode;
 		std::string _letters;
-		int _lastDigits;
+		int 		_lastDigits;
 };
 
 class Car
