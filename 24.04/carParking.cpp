@@ -39,7 +39,7 @@ class Machine
 		}
 
 	public:
-		void display() const
+		void	display() const
 		{
 			std::cout << _color << " " << _model;
 		}
@@ -57,7 +57,7 @@ class Car
 												_plate(plate) {};
 
 	public:
-		void info() const
+		void	info() const
 		{
 			_machine.display();
 			std::cout << std::endl;
@@ -67,8 +67,8 @@ class Car
 			std::cout << std::endl;
 		}
 
-		bool driverLicense() const {return _driver.license();}
-		void driverInfo() const {_driver.display();}
+		bool	driverLicense() const {return _driver.license();}
+		void	driverInfo() const {_driver.display();}
 		std::string	plate() const {return _plate;}
 
 	private:
@@ -231,7 +231,7 @@ class Parking
 			return result;
 		}
 
-		void info() const
+		void	info() const
 		{
 			std::cout << "_____________________" << std::endl;
 			std::cout << "____PARKING___LOT____" << std::endl << std::endl;
