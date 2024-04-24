@@ -4,25 +4,25 @@
 class Person
 {
 	public:
-		Person(const std::string& name, const std::string& surname, bool lisance) :	_name(name),
+		Person(const std::string& name, const std::string& surname, bool license) :	_name(name),
 												_surname(surname),
-												_driverLisance(lisance) {};
+												_driverLicense(license) {};
 
 		Person(const Person& p)
 		{
 			_name = p._name;
 			_surname = p._surname;
-			_driverLisance = p._driverLisance;
+			_driverLicense = p._driverLicense;
 		}
 
 	public:
-		bool	lisance() const{return _driverLisance;}
+		bool	license() const{return _driverLicense;}
 		void	display() const { std::cout << _name << " " << _surname;}
 
 	private:
 		std::string	_name;
 		std::string	_surname;
-		bool		_driverLisance;
+		bool		_driverLicense;
 
 };
 
@@ -67,7 +67,7 @@ class Car
 			std::cout << std::endl;
 		}
 
-		bool driverLisance() const {return _driver.lisance();}
+		bool driverLicense() const {return _driver.license();}
 		void driverInfo() const {_driver.display();}
 
 	private:
@@ -120,7 +120,7 @@ class Parking
 		{
 			if (_occupied < _capacity)
 			{
-				if (newCar.driverLisance())
+				if (newCar.driverLicense())
 				{
 					for (int i = 0; i < _capacity; ++i)
 					{
@@ -137,7 +137,7 @@ class Parking
 				else
 				{
 					newCar.driverInfo();
-					std::cout << " is not allowed to enter to Parking without lisance!" << std::endl;
+					std::cout << " is not allowed to enter to Parking without license!" << std::endl;
 				}
 			}
 			else
@@ -154,17 +154,11 @@ class Parking
 			if (place < _capacity)
 			{
 				char answer;
-				std::cout << "Transfer money for ";
+				std::cout << "Transfering money for ";
 				_parkingLot[place]->driverInfo();
-				std::cout << "'s car?" << std::endl;
-				std::cout << "Y / N : ";
-				std::cin >> answer;
-				if (answer == 'y' || answer == 'Y')
-				{
-					_payStatus[place] = true;
-					std::cout << "Great!" << std::endl;
-					result = true;
-				}
+				std::cout << "'s car parking." << std::endl;
+				_payStatus[place] = true;
+				result = true;
 			}
 			else
 				std::cout << "There is no parked car in " << (place + 1) << std::endl;
