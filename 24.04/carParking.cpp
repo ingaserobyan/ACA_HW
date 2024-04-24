@@ -47,7 +47,19 @@ class CarPlate
 
 	void display()
 	{
-		std::cout << _regionCode << _letters << _lastDigits;
+		if (_regionCode > 9 && _lastDigits > 99)
+			std::cout << _regionCode << _letters << _lastDigits;
+		else
+		{
+			if(_regionCode < 10)
+				std::cout << 0 << _regionCode;
+			else
+				std::cout << _regionCode;
+			std::cout << _letters << 0;
+			if (_lastDigits < 10)
+				std::cout << 0;
+			std::cout << _lastDigits;
+		}
 	}
 
 	private:
@@ -60,7 +72,7 @@ class Car
 {
 	public:
 		Car(const std::string& model, const std::string& color, const Person& driver, const CarPlate&  plate) : _model(model),
-																												_color(color),
+																					_color(color),
 																												_driver(driver),
 																												_plate(plate) {};
 
@@ -89,7 +101,7 @@ class Car
 int main()
 {
 	Person driver("Petros", "Petrosyan", true);
-	CarPlate plate(34, "OU", 456);
+	CarPlate plate(07, "OU", 71);
 	Car car("BMW", "Blue", driver, plate);
 	car.display();
 
