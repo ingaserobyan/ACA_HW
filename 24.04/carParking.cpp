@@ -69,6 +69,7 @@ class Car
 
 		bool driverLicense() const {return _driver.license();}
 		void driverInfo() const {_driver.display();}
+		std::string	plate() const {return _plate;}
 
 	private:
 		Machine		_machine;
@@ -118,6 +119,11 @@ class Parking
 	public:
 		int	parkCar(const Car& newCar)
 		{
+			if (searchCar(newCar.plate())!= -1)
+			{
+				std::cout << "Tha car is already parked" << std::endl;
+				return _capacity;
+			}
 			if (_occupied < _capacity)
 			{
 				if (newCar.driverLicense())
@@ -208,6 +214,19 @@ class Parking
 			std::cout << "Available: " << (_capacity - _occupied) << std::endl;
 		}
 
+		int	searchCar(const std::string& plate) const
+		{
+			for (int i = 0; i < _capacity; ++i)
+			{
+				if (_parkingLot[i])
+				{
+					if(_parkingLot[i]->plate() ==  plate)
+						return i;
+				}
+			}
+			return -1;
+		}
+
 	private:
 		Car**	_parkingLot = nullptr;
 		bool*	_payStatus;
@@ -231,9 +250,8 @@ int main()
 	int car2Place = parking.parkCar(car2);
 
 	int car3place = parking.parkCar(car1);
-	int car4place = parking.parkCar(car1);
-	int car5place = parking.parkCar(car2);
 	int car6place = parking.parkCar(car2);
+
 	parking.info();
 
 	if (!parking.leaveParking(car1Place))
@@ -241,14 +259,8 @@ int main()
 		parking.pay(car1Place);
 		parking.leaveParking(car1Place);
 	}
+	
 	parking.info();
-
-	int car7place = parking.parkCar(car2);
-
-
-	parking.info();
-
-
 
 	return 0;
 }
