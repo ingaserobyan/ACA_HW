@@ -72,7 +72,7 @@ class Car
 {
 	public:
 		Car(const std::string& model, const std::string& color, const Person& driver, const CarPlate&  plate) : _model(model),
-																					_color(color),
+																	_color(color),
 																												_driver(driver),
 																												_plate(plate) {};
 
