@@ -58,7 +58,7 @@ class Car
 
 
 	public:
-		void display()
+		void info()
 		{
 			_machine.display();
 			std::cout << " with car plate " << _plate << std::endl;
@@ -75,13 +75,26 @@ class Car
 
 };
 
+class Parking
+{
+	Parking(const int& capacity, const int& occupied = 0) : _capacity(capacity),
+									_occupied(occupied)
+	{
+		
+	}
+
+	private:
+		Car**	_parkingLot = nullptr;
+		int	_capacity = 0;
+		int	_occupied = 0;
+};
 
 int main()
 {
 	Person driver("Petros", "Petrosyan", true);
 	Machine machine("BMW", "Blue");
 	Car car(machine, driver, "34AU785");
-	car.display();
+	car.info();
 
 	return 0;
 }
