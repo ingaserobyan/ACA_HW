@@ -81,7 +81,8 @@ class Car
 class Parking
 {
 	public:
-		Parking(const int& capacity) : _capacity(capacity), _occupied(0)
+		Parking(const int& capacity) : _capacity(capacity),
+						_occupied(0)
 		{
 			_parkingLot = new Car*[_capacity];
 			_payStatus = new bool[_capacity];
@@ -93,7 +94,7 @@ class Parking
 		}
 
 		Parking(const Parking& p) :	_capacity(p._capacity),
-							_occupied (p._occupied)
+						_occupied (p._occupied)
 		{
 			_parkingLot = new Car*[_capacity];
 			_payStatus = new bool[_capacity];
