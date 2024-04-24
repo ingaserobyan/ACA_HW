@@ -78,9 +78,9 @@ class Car
 class Parking
 {
 	Parking(const int& capacity, const int& occupied = 0) : _capacity(capacity),
-									_occupied(occupied)
+								_occupied(occupied)
 	{
-		
+
 	}
 
 	private:
