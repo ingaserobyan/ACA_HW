@@ -68,12 +68,27 @@ class CarPlate
 		int		_lastDigits;
 };
 
+
+class Machine
+{
+	public:
+		Machine(const std::string& model, const std::string& color) : _model(model), _color(color) {};
+
+		Machine(const Machine& m)
+		{
+			_model = m._model;
+			_color = m._color;
+		}
+	private:
+		std::string	_model;
+		std::string	_color;
+};
+
 class Car
 {
 	public:
-		Car(const std::string& model, const std::string& color, const Person& driver, const CarPlate&  plate) : _model(model),
-															_color(color),
-															_driver(driver),
+		Car(const Machine& machine, const Person& driver, const std::string&  plate) : _machine(machine),
+													_driver(driver),
 															_plate(plate) {};
 
 
@@ -90,10 +105,9 @@ class Car
 
 
 	private:
-		std::string	_model;
-		std::string	_color;
+		Machine		_machine;
 		Person		_driver;
-		CarPlate	_plate;
+		std::string	_plate;
 
 };
 
