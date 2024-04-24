@@ -4,7 +4,9 @@
 class Person
 {
 	public:
-		Person(const std::string& name, const std::string& surname, bool lisance) : _name(name), _surname(surname), _driverLisance(lisance) {}
+		Person(const std::string& name, const std::string& surname, bool lisance) :	_name(name),
+												_surname(surname),
+												_driverLisance(lisance) {};
 
 		Person(const Person& p)
 		{
@@ -27,7 +29,8 @@ class Person
 class Machine
 {
 	public:
-		Machine(const std::string& model, const std::string& color) : _model(model), _color(color) {};
+		Machine(const std::string& model, const std::string& color) :	_model(model),
+										_color(color) {};
 
 		Machine(const Machine& m)
 		{
