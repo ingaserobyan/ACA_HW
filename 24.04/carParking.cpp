@@ -92,10 +92,9 @@ class Parking
 			}
 		}
 
-		Parking(const Parking& p)
+		Parking(const Parking& p) :	_capacity(p._capacity),
+					_occupied (p._occupied)
 		{
-			_capacity = p._capacity;
-			_occupied = p._occupied;
 			_parkingLot = new Car*[_capacity];
 			_payStatus = new bool[_capacity];
 			for(int i = 0; i < _capacity; ++i)
@@ -103,6 +102,40 @@ class Parking
 				_parkingLot[i] = new Car(*(p._parkingLot[i]));
 				_payStatus[i] = p._payStatus[i];
 			}
+		}
+
+		Parking& operator= (const Parking& p)
+		{
+			if (this != &p)
+			{
+				if (_capacity != p._capacity)
+				{
+					for (int i = 0; i <_capacity; ++i)
+					{
+						delete _parkingLot[i];
+						_parkingLot[i] = nullptr;
+					}
+					delete[] _parkingLot;
+					_capacity = p._capacity;
+					_parkingLot = new Car*[_capacity];
+					_payStatus = new bool[_capacity];
+				}
+				else
+				{
+					for (int i = 0; i < _capacity; ++i)
+					{
+						delete _parkingLot[i];
+						_parkingLot[i] = nullptr;
+					}
+				}
+				_occupied = p._occupied;
+				for(int i = 0; i < _capacity; ++i)
+				{
+					_parkingLot[i] = new Car(*(p._parkingLot[i]));
+					_payStatus[i] = p._payStatus[i];
+				}
+			}
+			return *this;
 		}
 
 		~Parking()
@@ -259,7 +292,7 @@ int main()
 		parking.pay(car1Place);
 		parking.leaveParking(car1Place);
 	}
-	
+
 	parking.info();
 
 	return 0;
