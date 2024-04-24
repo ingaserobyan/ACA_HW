@@ -16,8 +16,8 @@ class Person
 		}
 
 	public:
-		bool	lisance() {return _driverLisance;}
-		void	display() { std::cout << _name << " " << _surname;}
+		bool	lisance() const{return _driverLisance;}
+		void	display() const { std::cout << _name << " " << _surname;}
 
 	private:
 		std::string	_name;
@@ -39,7 +39,7 @@ class Machine
 		}
 
 	public:
-		void display()
+		void display() const
 		{
 			std::cout << _color << " " << _model;
 		}
@@ -57,7 +57,7 @@ class Car
 												_plate(plate) {};
 
 	public:
-		void info()
+		void info() const
 		{
 			_machine.display();
 			std::cout << std::endl;
@@ -67,6 +67,8 @@ class Car
 			std::cout << std::endl;
 		}
 
+		bool driverLisance() const {return _driver.lisance();}
+		void driverInfo() const {_driver.display();}
 
 	private:
 		Machine		_machine;
@@ -78,9 +80,15 @@ class Car
 class Parking
 {
 	public:
-		Parking(const int& capacity) : _capacity(capacity)
+		Parking(const int& capacity) : _capacity(capacity), _occupied(0)
 		{
 			_parkingLot = new Car*[_capacity];
+			_payStatus = new bool[_capacity];
+			for (int i = 0; i < _capacity; ++i)
+			{
+				_parkingLot[i] = nullptr;
+				_payStatus[i] = false;
+			}
 		}
 
 		Parking(const Parking& p)
@@ -88,54 +96,127 @@ class Parking
 			_capacity = p._capacity;
 			_occupied = p._occupied;
 			_parkingLot = new Car*[_capacity];
-			for (int i = 0; i < _occupied; ++i)
+			_payStatus = new bool[_capacity];
+			for(int i = 0; i < _capacity; ++i)
 			{
 				_parkingLot[i] = new Car(*(p._parkingLot[i]));
+				_payStatus[i] = p._payStatus[i];
 			}
 		}
 
 		~Parking()
 		{
-			for (int i = 0; i < _occupied; ++i)
+			for (int i = 0; i < _capacity; ++i)
 			{
 				delete _parkingLot[i];
 				_parkingLot[i] = nullptr;
 			}
 			delete[] _parkingLot;
+			delete[] _payStatus;
 		}
 
 	public:
-		bool parkCar(const Car& newCar)
+		int	parkCar(const Car& newCar)
 		{
-			bool result = false;
 			if (_occupied < _capacity)
 			{
-				_parkingLot[_occupied] = new Car(newCar);
-				_occupied++;
-				result = true;
+				if (newCar.driverLisance())
+				{
+					for (int i = 0; i < _capacity; ++i)
+					{
+						if (_parkingLot[i] == nullptr)
+						{
+							_parkingLot[i] = new Car(newCar);
+							_occupied++;
+							newCar.driverInfo();
+							std::cout << ", you parked your car at place " << (i + 1) << std::endl;
+							return i;
+						}
+					}
+				}
+				else
+				{
+					newCar.driverInfo();
+					std::cout << " is not allowed to enter to Parking without lisance!" << std::endl;
+				}
 			}
+			else
+			{
+				newCar.driverInfo();
+				std::cout << ", there is no available place, sorry" << std::endl;
+			}
+			return _capacity;
+		}
+
+		bool	pay(const int& place)
+		{
+			bool result = false;
+			if (place < _capacity)
+			{
+				char answer;
+				std::cout << "Transfer money for ";
+				_parkingLot[place]->driverInfo();
+				std::cout << "'s car?" << std::endl;
+				std::cout << "Y / N : ";
+				std::cin >> answer;
+				if (answer == 'y' || answer == 'Y')
+				{
+					_payStatus[place] = true;
+					std::cout << "Great!" << std::endl;
+					result = true;
+				}
+			}
+			else
+				std::cout << "There is no parked car in " << (place + 1) << std::endl;
 			return result;
 		}
 
-	void info()
-	{
-		std::cout << "__________________" << std::endl;
-		std::cout << "____PARK___LOT____" << std::endl << std::endl;
-		for (int i = 0; i < _occupied; ++i)
+		bool	leaveParking(const int& place)
 		{
-			std::cout << (i + 1) << " place:" << std::endl;
-			_parkingLot[i]->info();
-			std::cout << std::endl;
+			bool result = false;
+			if (place < _capacity)
+			{
+				if ((_payStatus[place]))
+				{
+					_parkingLot[place]->driverInfo();
+					std::cout << " Thanks and bye!" << std::endl;
+					_payStatus[place] = false;
+					delete _parkingLot[place];
+					_parkingLot[place] = nullptr;
+					_occupied--;
+					result = true;
+				}
+				else
+				{
+					_parkingLot[place]->driverInfo();
+					std::cout << ", you did not pay for parking, you cannot leave" << std::endl;
+				}
+			}
+			else
+				std::cout << "There is no parked car in " << (place + 1) << " place" << std::endl;
+			return result;
 		}
-		std::cout << "__________________" << std::endl;
-		std::cout << "Available: " << (_capacity - _occupied) << std::endl;
 
-	}
-
-
+		void info() const
+		{
+			std::cout << "_____________________" << std::endl;
+			std::cout << "____PARKING___LOT____" << std::endl << std::endl;
+			for (int i = 0; i < _capacity; ++i)
+			{
+				if (_parkingLot[i])
+				{
+					std::cout << (i + 1) << " PLACE:" << std::endl;
+					_parkingLot[i]->info();
+					std::cout << std::endl;
+				}
+			}
+			std::cout << "_____________________" << std::endl;
+			std::cout << "Available: " << (_capacity - _occupied) << std::endl;
+		}
 
 	private:
 		Car**	_parkingLot = nullptr;
+		bool*	_payStatus;
 		int	_capacity = 0;
 		int	_occupied = 0;
 };
@@ -152,11 +233,27 @@ int main()
 
 
 	Parking parking(5);
-	parking.parkCar(car1);
-	// parking.info();
+	int car1Place = parking.parkCar(car1);
+	int car2Place = parking.parkCar(car2);
 
-	parking.parkCar(car2);
+	int car3place = parking.parkCar(car1);
+	int car4place = parking.parkCar(car1);
+	int car5place = parking.parkCar(car2);
+	int car6place = parking.parkCar(car2);
 	parking.info();
+
+	if (!parking.leaveParking(car1Place))
+	{
+		parking.pay(car1Place);
+		parking.leaveParking(car1Place);
+	}
+	parking.info();
+
+	int car7place = parking.parkCar(car2);
+
+
+	parking.info();
+
 
 
 	return 0;
