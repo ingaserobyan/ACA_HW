@@ -93,7 +93,7 @@ class Parking
 		}
 
 		Parking(const Parking& p) :	_capacity(p._capacity),
-					_occupied (p._occupied)
+							_occupied (p._occupied)
 		{
 			_parkingLot = new Car*[_capacity];
 			_payStatus = new bool[_capacity];
