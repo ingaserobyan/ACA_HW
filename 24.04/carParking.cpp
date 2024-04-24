@@ -87,7 +87,7 @@ class Machine
 class Car
 {
 	public:
-		Car(const Machine& machine, const Person& driver, const std::string&  plate) : _machine(machine),
+		Car(const Machine& machine, const Person& driver, const std::string&  plate) :	_machine(machine),
 												_driver(driver),
 												_plate(plate) {};
 
