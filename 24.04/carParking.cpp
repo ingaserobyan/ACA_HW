@@ -56,12 +56,12 @@ class Car
 												_driver(driver),
 												_plate(plate) {};
 
-
 	public:
 		void info()
 		{
 			_machine.display();
-			std::cout << " with car plate " << _plate << std::endl;
+			std::cout << std::endl;
+			std::cout << "Car plate: " << _plate << std::endl;
 			std::cout << "The driver: ";
 			_driver.display();
 			std::cout << std::endl;
@@ -77,11 +77,62 @@ class Car
 
 class Parking
 {
-	Parking(const int& capacity, const int& occupied = 0) : _capacity(capacity),
-								_occupied(occupied)
+	public:
+		Parking(const int& capacity) : _capacity(capacity)
+		{
+			_parkingLot = new Car*[_capacity];
+		}
+
+		Parking(const Parking& p)
+		{
+			_capacity = p._capacity;
+			_occupied = p._occupied;
+			_parkingLot = new Car*[_capacity];
+			for (int i = 0; i < _occupied; ++i)
+			{
+				_parkingLot[i] = new Car(*(p._parkingLot[i]));
+			}
+		}
+
+		~Parking()
+		{
+			for (int i = 0; i < _occupied; ++i)
+			{
+				delete _parkingLot[i];
+				_parkingLot[i] = nullptr;
+			}
+			delete[] _parkingLot;
+		}
+
+	public:
+		bool parkCar(const Car& newCar)
+		{
+			bool result = false;
+			if (_occupied < _capacity)
+			{
+				_parkingLot[_occupied] = new Car(newCar);
+				_occupied++;
+				result = true;
+			}
+			return result;
+		}
+
+	void info()
 	{
+		std::cout << "__________________" << std::endl;
+		std::cout << "____PARK___LOT____" << std::endl << std::endl;
+		for (int i = 0; i < _occupied; ++i)
+		{
+			std::cout << (i + 1) << " place:" << std::endl;
+			_parkingLot[i]->info();
+			std::cout << std::endl;
+		}
+		std::cout << "__________________" << std::endl;
+		std::cout << "Available: " << (_capacity - _occupied) << std::endl;
 
 	}
+
+
 
 	private:
 		Car**	_parkingLot = nullptr;
@@ -91,10 +142,22 @@ class Parking
 
 int main()
 {
-	Person driver("Petros", "Petrosyan", true);
-	Machine machine("BMW", "Blue");
-	Car car(machine, driver, "34AU785");
-	car.info();
+	Person driver1("Petros", "Petrosyan", true);
+	Machine machine1("BMW", "Blue");
+	Car car1(machine1, driver1, "34AU785");
+
+	Person driver2("Martiros", "Martirosyan", true);
+	Machine machine2("Mercedes", "Black");
+	Car car2(machine2, driver2, "10AB234");
+
+
+	Parking parking(5);
+	parking.parkCar(car1);
+	// parking.info();
+
+	parking.parkCar(car2);
+	parking.info();
+
 
 	return 0;
 }
