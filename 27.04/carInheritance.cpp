@@ -13,12 +13,12 @@ private:
 };
 
 /**
-				 ________________Car______________________
-				/			      |			              \
-			   / 			      |		  	               \
-			  /                   |                         \
-	Passengers				     Cargo				         working
- _____|_______   		      ____|_____                _________|___________
+                 ________________Car______________________
+                /                 |                       \
+               /                  |                        \
+              /                   |                         \
+    Passengers                  Cargo                        working
+ _____|_______                ____|_____                _________|___________
 /     |       \              /    |     \              /         |           \
 bus   family    common    Light  Middle  Heavy  Agrigulture  Construction   Fisrt Aid
 
