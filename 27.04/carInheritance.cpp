@@ -1,29 +1,70 @@
 #include <iostream>
+#include <string>
 
-class Car
+class Engine
 {
 public:
-	Car(const int& wheels, const int& seats, const std::string& engine) :	_wheels(wheels),
-														_seats(seats),
-														_engine(engine) {}
+	Engine(const int& hp, const int& wheels, const std::string& fuelType) : _hp(hp),
+									_wheels(wheels),
+									_fuelType(fuelType) {};
+
 private:
-	int	_wheels;
-	int _seats;
-	std::string	_engine;
+	int	_hp;
+	int _wheels;
+	std::string	_fuelType;
 };
 
-/*
-                 ________________Car______________________
-                /                 |                       \
-               /                  |                        \
-              /                   |                         \
-    Passengers                  Cargo                        working
- _____|_______                ____|_____                _________|___________
-/     |       \              /    |     \              /         |           \
-bus   family    common    Light  Middle  Heavy  Agrigulture  Construction   Fisrt Aid
+class Car : public Engine
+{
+public:
+	Car(const int& hp, const int& wheels, const std::string& fuelType, const int& seats, const std::string& model) : Engine(hp, wheels, fuelType),
+												_seats(seats),
+												_model(model) {};
+private:
+	int	_seats;
+	std::string	_model;
+};
 
-*/
+class Motorcycle : public Engine
+{
+public:
+	Motorcycle (const int& hp, const int& wheels, const std::string& fuelType, const int& maxSpeed, const int& weight) : Engine(hp, wheels, fuelType),
+																		_maxSpeed(maxSpeed),
+																		_weight(weight) {};
 
+private:
+	int _maxSpeed;
+	int _weight;
+};
+
+class Airplane : public Engine
+{
+public:
+	Airplane (const int& hp, const int& wheels, const std::string& fuelType, const int& wingSpan, const int& range) : Engine(hp, wheels, fuelType),
+																		_wingSpan(wingSpan),
+																		_range (range) {};
+
+private:
+	int _wingSpan;
+	int _range;
+};
+
+class SportCar : public Car
+{
+public:
+	SportCar ()
+
+};
+
+class Mercedes : public Car
+{
+
+};
+
+class Toyota : public Car
+{
+
+};
 
 int main()
 {
