@@ -38,8 +38,11 @@ int main()
 
 	std::cout << std::endl;
 
-	A* ptr1 = &obj;
+	A* ptr1 = new B();
 	ptr1->foo();
+
+
+	delete ptr1;
 
 
 
