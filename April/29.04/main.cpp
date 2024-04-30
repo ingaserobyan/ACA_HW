@@ -13,9 +13,6 @@ int fillZoo(vector<Animal*>& zoo)
 {
 	int count = 0;
 
-	zoo.push_back(new Animal);
-	++count;
-
 	zoo.push_back(new Dog);
 	++count;
 

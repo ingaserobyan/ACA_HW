@@ -1,6 +1,6 @@
 #include "animal.hpp"
 
-Animal::Animal(int legs) : _legs(legs) {}
+Animal::Animal() {}
 
 Animal::~Animal()
 {

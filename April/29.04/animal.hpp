@@ -6,15 +6,12 @@
 class Animal
 {
 	public:
-		Animal(int legs = 0);
+		Animal();
 
 		virtual ~Animal();
 
 	public:
-		virtual void voice();
-
-	private:
-		int _legs;
+		virtual void voice() = 0;
 };
 
 # endif //__ANIMAL_HPP__
