@@ -1,21 +1,20 @@
-#ifndef __PAWN_HPP__
-#define __PAWN_HPP__
+#ifndef __ROOK_HPP__
+#define __ROOK_HPP__
 
 #include "piece.hpp"
 
-class Pawn : public Piece
+class Rook : public Piece
 {
 	public:
-		Pawn();
-		Pawn(bool, int, int);
-		~Pawn() override;
+		Rook(bool, char, int);
+		~Rook() override;
 
 	public:
 		void move(char, int) override;
 		void display() const override;
 
-	private:
+	protected:
 		bool validateMove(int, int) const override;
 };
 
-#endif //__PAWN_HPP__
+#endif // __ROOK_HPP__

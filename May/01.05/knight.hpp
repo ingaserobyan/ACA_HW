@@ -1,14 +1,13 @@
-#ifndef __PAWN_HPP__
-#define __PAWN_HPP__
+#ifndef __KNIGHT_HPP__
+#define __KNIGHT_HPP__
 
 #include "piece.hpp"
 
-class Pawn : public Piece
+class Knight : public Piece
 {
 	public:
-		Pawn();
-		Pawn(bool, int, int);
-		~Pawn() override;
+		Knight(bool, int, int);
+		~Knight();
 
 	public:
 		void move(char, int) override;
@@ -16,6 +15,8 @@ class Pawn : public Piece
 
 	private:
 		bool validateMove(int, int) const override;
+
+
 };
 
-#endif //__PAWN_HPP__
+#endif // __KNIGHT_HPP__
