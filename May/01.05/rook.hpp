@@ -6,11 +6,11 @@
 class Rook : public Piece
 {
 	public:
+		Rook();
 		Rook(bool, char, int);
 		~Rook() override;
 
 	public:
-		void move(char, int) override;
 		void display() const override;
 
 	protected:

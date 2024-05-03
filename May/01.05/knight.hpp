@@ -6,11 +6,11 @@
 class Knight : public Piece
 {
 	public:
-		Knight(bool, int, int);
+		Knight();
+		Knight(bool, char, int);
 		~Knight();
 
 	public:
-		void move(char, int) override;
 		void display() const override;
 
 	private:

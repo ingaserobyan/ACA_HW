@@ -6,7 +6,10 @@ SRC = main.cpp \
 	piece.cpp\
 	pawn.cpp\
 	knight.cpp\
-	rook.cpp
+	rook.cpp\
+	queen.cpp\
+	king.cpp\
+	bishop.cpp
 
 HEADERS = $(wildcard *.hpp)
 
