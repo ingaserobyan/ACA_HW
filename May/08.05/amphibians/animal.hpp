@@ -1,8 +1,8 @@
 #ifndef __ANIMAL_HPP__
 #define __ANIMAL_HPP__
 
-//  Feed Conversion Ratio - FCR
-// 	Specific Dynamic Action - SDA
+// Feed Conversion Ratio - FCR
+// Specific Dynamic Action - SDA
 
 class Animal
 {
