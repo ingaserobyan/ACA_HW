@@ -10,3 +10,4 @@ void Fish::swim(const int& time)
 {
 	_weight -= time * _swimSpeed * _sda;
 }
+

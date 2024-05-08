@@ -13,7 +13,7 @@ class Amphibian : public Fish, public Mammals
 {
 	public:
 		Amphibian(const float&, const float&, const float&, const float&, const bool&, const bool&);
-		~Amphibian();
+		~Amphibian() override;
 
 	public:
 		bool getLocation() const;

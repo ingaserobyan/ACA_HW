@@ -10,7 +10,7 @@ class Mammals : virtual public Animal
 {
 	public:
 		Mammals(const float&, const float&, const float&, const bool&);
-		~Mammals();
+		~Mammals() override;
 
 	public:
 		void run(const int&, const int&); // distance, time
