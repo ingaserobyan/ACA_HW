@@ -1,5 +1,8 @@
 #include "array.hpp"
 
+
+#include <iostream>
+
 Array::Array(const int size) : _size(size)
 {
 	_array = new int[_size];
@@ -45,6 +48,20 @@ Array& Array::operator= (const Array& array)
 
 int& Array::operator[] (int index) const
 {
-	
+	std::cout << "called operator[] const" << std::endl;
+	if(index >= _size)
+	{
+		throw std::out_of_range("Index out of bounds!");
+	}
+	return _array[index];
+}
 
+int& Array::operator[] (int index)
+{
+	std::cout << "called operator[] " << std::endl;
+	if(index >= _size)
+	{
+		throw std::out_of_range("Index out of bounds!");
+	}
+	return _array[index];
 }

@@ -11,6 +11,7 @@ class Array
 	public:
 		Array& operator= (const Array&);
 		int& operator[](int) const;
+		int& operator[](int);
 
 	private:
 		int _size;
