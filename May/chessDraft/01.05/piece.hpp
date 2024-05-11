@@ -10,18 +10,29 @@
 class Piece
 {
 	public:
-		Piece(bool color, int row, int col);
-		~Piece();
+		Piece(bool, char, int);
+		virtual ~Piece();
 
 	public:
-		virtual void move() = 0;
-		virtual	void display() = 0;
+		virtual	void display() const = 0;
+
+	public:
+		void move(char, int);
 		bool getColor() const;
 		int	getRow() const;
 		int getCol() const;
+		void displayCoords() const;
+
+	protected:
+		virtual bool validateMove(int, int) const = 0;
+
+	protected:
+		bool	validateInput(const char&, const int&, int&);
 
 	private:
 		bool	_color;
+		const char*	_letters = "ABCDEFG";
+		
 	protected:
 		int	_row;
 		int	_col;

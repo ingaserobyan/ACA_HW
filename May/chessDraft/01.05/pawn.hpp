@@ -7,12 +7,14 @@ class Pawn : public Piece
 {
 	public:
 		Pawn();
-		Pawn(bool, int, int);
-		~Pawn();
+		Pawn(bool, char, int);
+		~Pawn() override;
 
 	public:
-		void move() override;
-		void display() override;
+		void display() const override;
+
+	private:
+		bool validateMove(int, int) const override;
 };
 
 #endif //__PAWN_HPP__

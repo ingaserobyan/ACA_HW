@@ -1,38 +1,28 @@
 #include "pawn.hpp"
 
-Pawn::Pawn() : Piece(d_white, 1, 1) {}
+Pawn::Pawn() : Piece(d_white, 'A', 2) {}
 
-Pawn::Pawn(bool color, int row, int col) : Piece(color, row, color) {}
+Pawn::Pawn(bool color, char col, int row) : Piece(color, col, row) {}
 
 Pawn::~Pawn() {};
 
-void Pawn::move()
+bool Pawn::validateMove(int row, int col) const
 {
-	if(getColor())
-	{
-		if(_row > 0 && _row < d_size)
-			_row++;
-		else
-			throw ;
-	}
+
+	if (_col != col)
+        return false;
+	if (getColor())
+		return ((row - _row) == 1);
 	else
-	{
-		if(_row >= 0 && _row < (d_size - 1))
-			_row--;
-		else
-			throw ;
-	}
+		return ((_row - row) == 1);
 }
 
-void Pawn::display()
+void Pawn::display() const
 {
 	if (getColor())
-	{
 		std::cout << "White";
-	}
 	else
-	{
-		std::cout << "Black ";
-	}
-	std::cout <<" Pawn";
+		std::cout << "Black";
+
+	std::cout <<" Pawn ";
 }
