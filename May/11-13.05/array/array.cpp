@@ -24,7 +24,7 @@ Array::~Array()
 }
 
 
-//geter
+//getter
 int Array::size() const
 {
 	return _size;
