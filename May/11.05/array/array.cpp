@@ -3,6 +3,7 @@
 
 #include <iostream>
 
+// ctors and dtor
 Array::Array(const int size) : _size(size)
 {
 	_array = new int[_size];
@@ -22,22 +23,26 @@ Array::~Array()
 	delete[] _array;
 }
 
+
+//geter
+int Array::size() const
+{
+	return _size;
+}
+
+
+// operator... overloading
 Array& Array::operator= (const Array& array)
 {
-	if(this == &array)
-		return *this;
-	if(_size == array._size)
+	if(this != &array)
 	{
-		for(int i = 0; i < _size; ++i)
+		if (_size != array._size)
 		{
-			_array[i] = array._array[i];
+			_size = array._size;
+			delete[] _array;
+			_array = new int[_size];
 		}
-	}
-	else
-	{
-		_size = array._size;
-		delete[] _array;
-		_array = new int[_size];
+
 		for(int i = 0; i < _size; ++i)
 		{
 			_array[i] = array._array[i];
@@ -48,7 +53,6 @@ Array& Array::operator= (const Array& array)
 
 int& Array::operator[] (int index) const
 {
-	std::cout << "called operator[] const" << std::endl;
 	if(index >= _size)
 	{
 		throw std::out_of_range("Index out of bounds!");
@@ -58,7 +62,6 @@ int& Array::operator[] (int index) const
 
 int& Array::operator[] (int index)
 {
-	std::cout << "called operator[] " << std::endl;
 	if(index >= _size)
 	{
 		throw std::out_of_range("Index out of bounds!");
