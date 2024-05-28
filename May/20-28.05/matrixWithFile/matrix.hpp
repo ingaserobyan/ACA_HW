@@ -18,8 +18,8 @@ class Matrix
  		~Matrix();
 
 	public:
-		Matrix& operator= (const Matrix&);
-		Matrix& operator= (Matrix&&);
+		Matrix&	operator= (const Matrix&);
+		Matrix&	operator= (Matrix&&);
 		Matrix	operator+ (const Matrix&);
 		Matrix&	operator++ ();
 		Matrix	operator++ (int);
