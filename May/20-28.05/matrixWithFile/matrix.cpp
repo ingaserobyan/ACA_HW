@@ -169,7 +169,7 @@ Matrix<int>& Matrix<int>::operator= (Matrix<int>&& m)
 }
 
 
-//__PRIVATE__FUNCTIONS__
+//__METHODS__
 template<>
 void Matrix<int>::deleteMatrix()
 {
