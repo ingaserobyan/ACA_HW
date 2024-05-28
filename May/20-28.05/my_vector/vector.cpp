@@ -94,7 +94,6 @@ namespace	my
 			_capacity *= 2;
 		}
 		_vector[_size] = i;
-		std::cout << "index = " << i << " _vector[i] = " << _vector[_size] << std::endl;
 		_size++;
 	}
 
