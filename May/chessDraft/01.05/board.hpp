@@ -23,3 +23,11 @@ class Board
 };
 
 #endif // __BOARD_HPP__
+
+/*
+BK
+WK
+WQ
+WB
+WR
+*/
