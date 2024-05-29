@@ -45,7 +45,7 @@ namespace	my
 	{
 		if(this != &v)
 		{
-			delete[] v._vector;
+			delete[] _vector;
 			_size = v._size;
 			_capacity = v._capacity;
 			_vector = new int[_capacity];
@@ -62,7 +62,7 @@ namespace	my
 	{
 		if(this != &v)
 		{
-			delete[] v._vector;
+			delete[] _vector;
 			_size = v._size;
 			_capacity = v._capacity;
 			_vector = v._vector;
