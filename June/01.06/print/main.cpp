@@ -29,7 +29,7 @@ int main()
 {
 	Print("hi", " ", 1," ", 45.7);
 
-		Array myArr(5);
+	Array myArr(5);
 	int size = myArr.size();
 
 	for(int i = 0; i < size; ++i)
