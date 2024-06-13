@@ -35,7 +35,4 @@ Node<T>& Node<T>::operator= (Node&& oldNode)
 }
 
 template<typename T>
-void Node<T>::next (Node* ptrToNext)
-{
-	
-}
+Node<T>::Node(T&& data, const Node* next) : _data(std::forward(data)), _next(next) {}

@@ -8,14 +8,13 @@ class Node
 {
 public:
 	Node(T&&);
+	Node(T&&, const Node*)
 	Node(const Node&);
 	Node(Node&&);
 	~Node() = default;
 
 	Node&	operator= (const Node&);
 	Node&	operator= (Node&&);
-
-	void	next(Node*);
 
 	T	_data;
 	Node*	_next;
@@ -25,5 +24,3 @@ public:
 
 
 #endif // __NODE_HPP__
-
-
