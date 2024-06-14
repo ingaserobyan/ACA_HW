@@ -3,24 +3,66 @@
 
 #include <utility>
 
-template <typename T>
-class Node
+#include <iostream>
+
+namespace my
 {
-public:
-	Node(T&&);
-	Node(T&&, const Node*)
-	Node(const Node&);
-	Node(Node&&);
-	~Node() = default;
+	template <typename T>
+	struct Node
+	{
+		Node(T&&);
+		Node(T&&, const Node*);
+		Node(const Node&);
+		Node(Node&&);
+		~Node() = default;
 
-	Node&	operator= (const Node&);
-	Node&	operator= (Node&&);
+		Node&	operator= (const Node&);
+		Node&	operator= (Node&&);
 
-	T	_data;
-	Node*	_next;
-};
+		void	display();
+
+		T	_data;
+		Node*	_next;
+	};
+
+	template<typename T>
+	Node<T>::Node(T&& data) : _data(std::forward<T>(data)), _next(nullptr) {}
+
+	template<typename T>
+	Node<T>::Node(const Node& oldNode) : _data(oldNode._data), _next(oldNode._next) {}
+
+	template<typename T>
+	Node<T>::Node(Node&& oldNode) : _data(oldNode._data), _next(oldNode._next)
+	{ oldNode._next = nullptr; }
+
+	template<typename T>
+	Node<T>&	Node<T>::operator= (const Node& oldNode)
+	{
+		if (this != &oldNode)
+		{
+			_data = oldNode._data;
+			_next = oldNode._next;
+		}
+		return *this;
+	}
+
+	template<typename T>
+	Node<T>& Node<T>::operator= (Node&& oldNode)
+	{
+		if (this != &oldNode) {
+			_data = std::move(oldNode._data);
+			_next = oldNode._next;
+			oldNode._next = nullptr;
+		}
+		return *this;
+	}
+
+	template<typename T>
+	Node<T>::Node(T&& data, const Node* next) : _data(std::forward<T>(data)), _next(next) {}
 
 
-
-
+	template<typename T>
+	void Node<T>::display()
+	{ std::cout << _data << std::endl; }
+}
 #endif // __NODE_HPP__
