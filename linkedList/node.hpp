@@ -11,7 +11,7 @@ namespace my
 	struct Node
 	{
 		Node(T&&);
-		Node(T&&, const Node*);
+		Node(T&&, Node*);
 		Node(const Node&);
 		Node(Node&&);
 		~Node() = default;
@@ -58,11 +58,16 @@ namespace my
 	}
 
 	template<typename T>
-	Node<T>::Node(T&& data, const Node* next) : _data(std::forward<T>(data)), _next(next) {}
-
+	Node<T>::Node(T&& data, Node* next) : _data(std::forward<T>(data)), _next(next) {}
 
 	template<typename T>
 	void Node<T>::display()
-	{ std::cout << _data << std::endl; }
+	{
+		std::cout << _data;
+		if(_next)
+			std::cout << " -> ";
+		else
+			std::cout << std::endl;
+	}
 }
 #endif // __NODE_HPP__

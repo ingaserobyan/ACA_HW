@@ -17,8 +17,13 @@ namespace my
 			void	push_front(const Node<T>&);
 			void	push_front(T&&);
 			void	pop_front();
+			void	insert(T&&, const int&);
+			void	insert(Node<T>&, const int&);
 
 		public:
+			Node<T>*	findLastN(T&&);
+			void	reverse();
+			bool	isCyclic();
 			void	display();
 
 		private:
@@ -56,7 +61,7 @@ namespace my
 		if (_head)
 		{
 			Node<T>* tmp = _head;
-			_head = _head->next;
+			_head = _head->_next;
 			delete tmp;
 		}
 	}
@@ -70,6 +75,99 @@ namespace my
 			tmp->display();
 			tmp = tmp->_next;
 		}
+	}
+
+	template<typename T>
+	void	singleList<T>::insert(T&& data, const int& position)
+	{
+		if(position <= 0)
+		{
+			this->push_front(std::move(data));
+			return ;
+		}
+
+		Node<T>* tmp = _head;
+		int	i = 0;
+
+		while(i < (position - 1) && tmp)
+		{
+			++i;
+			tmp = tmp->_next;
+		}
+		if(!tmp)
+			return ;
+		tmp->_next = new Node<T>(std::move(data), tmp->_next);
+	}
+
+
+	template<typename T>
+	void	singleList<T>::insert(Node<T>& node, const int& position)
+	{
+		if(position <= 0)
+		{
+			this->push_front(node);
+			return ;
+		}
+
+		Node<T>* tmp = _head;
+		int	i = 0;
+
+		while(i < (position - 1) && tmp)
+		{
+			++i;
+			tmp = tmp->_next;
+		}
+		if(!tmp)
+			return ;
+		Node<T>* holder = tmp->_next;
+		tmp->_next = new Node<T>(node);
+		tmp->_next->_next = holder;
+	}
+
+	template<typename T>
+	Node<T>*	singleList<T>::findLastN(T&& value)
+	{
+		Node<T>*	counter = _head;
+		Node<T>*	element = NULL;
+		while(counter)
+		{
+			if(counter->_data == value)
+				element = counter;
+			counter = counter->_next;
+		}
+		return element;
+	}
+
+	template<typename T>
+	void	singleList<T>::reverse()
+	{
+		Node<T>*	current = _head;
+		Node<T>*	next = nullptr;
+		Node<T>*	previous = nullptr;
+
+		while(current)
+		{
+			next = current->_next;
+			current->_next = previous;
+			previous = current;
+			current = next;
+		}
+		_head = previous;
+	}
+
+	template<typename T>
+	bool	singleList<T>::isCyclic()
+	{
+		bool	status = false;
+		Node<T>*	counter = _head;
+
+		while(counter && (counter != _head))
+		{
+			if(counter->_next == _head)
+				status = true;
+			counter = counter->_next;
+		}
+		return status;
 	}
 }
 
