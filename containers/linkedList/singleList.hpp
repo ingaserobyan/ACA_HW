@@ -39,8 +39,8 @@ namespace my
 					Node<U>*	operator->();
 					Iterator<U>&	operator++();
 					Iterator<U>	operator++(int);
-					bool	operator==(const Iterator<U>& other) const;
-					bool	operator!=(const Iterator<U>& other) const;
+					bool	operator==(const Iterator<U>&) const;
+					bool	operator!=(const Iterator<U>&) const;
 
 				private:
 					Node<U>* _current;
