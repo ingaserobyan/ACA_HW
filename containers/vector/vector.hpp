@@ -28,11 +28,25 @@ namespace my
 
 		class	Iterator
 		{
-			Iterator();
-			~Iterator();
+			public:
+				Iterator();
+				Iterator(T* ptr);
+				~Iterator();
+
+				T& operator* ();
+				Iterator& operator++ ();
+				Iterator operator++ (int);
+				bool operator== (const Iterator& other) const;
+				bool operator!= (const Iterator& other) const;
 			private:
 				T* _vec;
 		};
+
+	public:
+		void	pop(Iterator pos);
+		Iterator begin();
+        Iterator end();
+		void	display();
 
 		private:
 			size_t	_size;
@@ -228,13 +242,86 @@ namespace my
 					_size++;
 					status = true;
 				}
+			}
+			return status;
 		}
-		return status;
 	}
 
-	template <typename T>
-	Vector<T>::Iterator::Iterator(T&&) : _
+	template<typename T>
+    void Vector<T>::pop(Vector<T>::Iterator pos)
+    {
+        if (pos._ptr >= _vector && pos._ptr < _vector + _size)
+        {
+            for (auto it = pos; it != end() - 1; ++it)
+            {
+                *it = *(it + 1);
+            }
+            --_size;
+        }
+    }
 
+	template <typename T>
+    Vector<T>::Iterator::Iterator() : _ptr(nullptr) {}
+
+    template <typename T>
+    Vector<T>::Iterator::Iterator(T* ptr) : _ptr(ptr) {}
+
+    template <typename T>
+    Vector<T>::Iterator::~Iterator() {}
+
+    template <typename T>
+    T& Vector<T>::Iterator::operator* ()
+	{
+        return *_ptr;
+    }
+
+    template <typename T>
+    typename Vector<T>::Iterator& Vector<T>::Iterator::operator++ ()
+	{
+        ++_ptr;
+        return *this;
+    }
+
+    template <typename T>
+    typename Vector<T>::Iterator Vector<T>::Iterator::operator++ (int)
+	{
+        Iterator temp = *this;
+        ++_ptr;
+        return temp;
+    }
+
+    template <typename T>
+    bool Vector<T>::Iterator::operator== (const Iterator& other) const
+	{
+        return _ptr == other._ptr;
+    }
+
+    template <typename T>
+    bool Vector<T>::Iterator::operator!= (const Iterator& other) const
+	{
+        return _ptr != other._ptr;
+    }
+
+    template <typename T>
+    typename Vector<T>::Iterator Vector<T>::begin()
+	{
+        return Iterator(_vector);
+    }
+
+    template <typename T>
+    typename Vector<T>::Iterator Vector<T>::end()
+	{
+        return Iterator(_vector + _size);
+    }
+
+	template <typename T>
+	void	Vector<T>::display()
+	{
+       for (auto itr = begin(); itr != end(); itr++)
+	   {
+			std::cout << *itr << " " << std::endl;
+	   }
+    }
 
 } // namespace my
 
