@@ -269,38 +269,38 @@ namespace my
 	}
 
 	template<typename T>
-    void Vector<T>::resize(const size_t& newSize)
-    {
-        if (newSize < _size)
-        {
-            _size = newSize;
-        }
-        else if (newSize > _capacity)
-        {
-            reserve(newSize);
-            _size = newSize;
-        }
-        else
-        {
-            _size = newSize;
-        }
-    }
+	void Vector<T>::resize(const size_t& newSize)
+	{
+		if (newSize < _size)
+		{
+			_size = newSize;
+		}
+		else if (newSize > _capacity)
+		{
+			reserve(newSize);
+			_size = newSize;
+		}
+		else
+		{
+			_size = newSize;
+		}
+	}
 
-    template<typename T>
-    void Vector<T>::reserve(const size_t& newCapacity)
-    {
-        if (newCapacity > _capacity)
-        {
-            T* new_vector = new T[newCapacity];
-            for (size_t i = 0; i < _size; ++i)
-            {
-                new_vector[i] = _vector[i];
-            }
-            delete[] _vector;
-            _vector = new_vector;
-            _capacity = newCapacity;
-        }
-    }
+	template<typename T>
+	void Vector<T>::reserve(const size_t& newCapacity)
+	{
+		if (newCapacity > _capacity)
+		{
+			T* new_vector = new T[newCapacity];
+			for (size_t i = 0; i < _size; ++i)
+			{
+				new_vector[i] = _vector[i];
+			}
+			delete[] _vector;
+			_vector = new_vector;
+			_capacity = newCapacity;
+		}
+	}
 
 	template <typename T>
 	bool	Vector<T>::pop(Vector<T>::Iterator itr)
