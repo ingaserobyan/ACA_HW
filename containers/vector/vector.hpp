@@ -28,7 +28,7 @@ namespace my
 			bool	pop_front();
 			bool	insert(const T&, const size_t&);
 			void	resize(const size_t&);
-        	void	reserve(const size_t&);
+			void	reserve(const size_t&);
 
 		class	Iterator
 		{
