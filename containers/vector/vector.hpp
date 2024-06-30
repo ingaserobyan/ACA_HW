@@ -2,6 +2,7 @@
 #define __VECTOR_HPP__
 
 #include <cstddef>
+#include <initializer_list>
 
 namespace my
 {
@@ -10,6 +11,7 @@ namespace my
 	{
 		public:
 			Vector();
+			Vector(std::initializer_list<T>);
 			Vector(const size_t&);
 			Vector(const Vector<T>&);
 			Vector(Vector<T>&&);
@@ -22,31 +24,36 @@ namespace my
 		public:
 			bool	push_back(const T&);
 			bool	pop_back();
-			bool	push_fornt(const T&);
+			bool	push_front(const T&);
 			bool	pop_front();
 			bool	insert(const T&, const size_t&);
 
 		class	Iterator
 		{
 			public:
-				Iterator();
-				Iterator(T* ptr);
+				Iterator(T*);
 				~Iterator();
 
-				T& operator* ();
-				Iterator& operator++ ();
-				Iterator operator++ (int);
-				bool operator== (const Iterator& other) const;
-				bool operator!= (const Iterator& other) const;
+			public:
+				T&	operator*();
+				T*	operator->();
+				Iterator&	operator++();
+				Iterator	operator++(int);
+				bool	operator==(const Iterator&) const;
+				bool	operator!=(const Iterator&) const;
+
+			public:
+				Iterator operator+(int n) const;
+				Iterator operator-(int n) const;
+				bool operator>(const Iterator& other) const;
+
 			private:
 				T* _vec;
 		};
 
-	public:
-		void	pop(Iterator pos);
-		Iterator begin();
-        Iterator end();
-		void	display();
+		bool	pop(Iterator);
+		Iterator	begin() const;
+		Iterator	end() const;
 
 		private:
 			size_t	_size;
@@ -56,6 +63,17 @@ namespace my
 
 	template <typename T>
 	Vector<T>::Vector() : _size(0), _capacity(0), _vector(nullptr) {}
+
+  	template <typename T>
+	Vector<T>::Vector(std::initializer_list<T> init_list) : _size(init_list.size()), _capacity(2*_size), _vector(new T[_capacity])
+	{
+		size_t index = 0;
+        for (auto it = init_list.begin(); it != init_list.end(); ++it)
+		{
+            _vector[index] = *it;
+			index++;
+        }
+    }
 
 	template <typename T>
 	Vector<T>::Vector(const size_t& size) : _size(size), _capacity(2*_size), _vector(new T[_capacity]) {}
@@ -152,7 +170,7 @@ namespace my
 	}
 
 	template <typename T>
-	bool	Vector<T>::push_fornt(const T& newElement)
+	bool	Vector<T>::push_front(const T& newElement)
 	{
 		bool	status = false;
 		if(_size >= _capacity)
@@ -209,7 +227,7 @@ namespace my
 			if(index == _size)
 				push_back(newElement);
 			else if(index == 0)
-				push_fornt(newElement);
+				push_front(newElement);
 			else
 			{
 				if(_size == _capacity)
@@ -243,85 +261,113 @@ namespace my
 					status = true;
 				}
 			}
-			return status;
 		}
+		return status;
 	}
 
-	template<typename T>
-    void Vector<T>::pop(Vector<T>::Iterator pos)
-    {
-        if (pos._ptr >= _vector && pos._ptr < _vector + _size)
-        {
-            for (auto it = pos; it != end() - 1; ++it)
-            {
-                *it = *(it + 1);
-            }
-            --_size;
-        }
-    }
+	template <typename T>
+	bool	Vector<T>::pop(Vector<T>::Iterator itr)
+	{
+		if(itr > end())
+			return false;
+		if(itr == begin())
+			pop_front();
+		if(itr == end())
+			pop_back();
+		for(Vector<T>::Iterator it = itr; it != (end() - 1); ++it)
+		{
+			(*it) = *(it + 1);
+		}
+		_size--;
+		return true;
+	}
 
 	template <typename T>
-    Vector<T>::Iterator::Iterator() : _ptr(nullptr) {}
-
-    template <typename T>
-    Vector<T>::Iterator::Iterator(T* ptr) : _ptr(ptr) {}
-
-    template <typename T>
-    Vector<T>::Iterator::~Iterator() {}
-
-    template <typename T>
-    T& Vector<T>::Iterator::operator* ()
-	{
-        return *_ptr;
-    }
-
-    template <typename T>
-    typename Vector<T>::Iterator& Vector<T>::Iterator::operator++ ()
-	{
-        ++_ptr;
-        return *this;
-    }
-
-    template <typename T>
-    typename Vector<T>::Iterator Vector<T>::Iterator::operator++ (int)
-	{
-        Iterator temp = *this;
-        ++_ptr;
-        return temp;
-    }
-
-    template <typename T>
-    bool Vector<T>::Iterator::operator== (const Iterator& other) const
-	{
-        return _ptr == other._ptr;
-    }
-
-    template <typename T>
-    bool Vector<T>::Iterator::operator!= (const Iterator& other) const
-	{
-        return _ptr != other._ptr;
-    }
-
-    template <typename T>
-    typename Vector<T>::Iterator Vector<T>::begin()
-	{
-        return Iterator(_vector);
-    }
-
-    template <typename T>
-    typename Vector<T>::Iterator Vector<T>::end()
-	{
-        return Iterator(_vector + _size);
-    }
+	Vector<T>::Iterator::Iterator(T* current) : _vec((current)) {}
 
 	template <typename T>
-	void	Vector<T>::display()
+	Vector<T>::Iterator::~Iterator() {}
+
+	// T&	operator*();
+	template <typename T>
+	T&	Vector<T>::Iterator::operator* () {return *_vec;}
+
+	// T*	operator->();
+	template <typename T>
+	T*	Vector<T>::Iterator::operator-> () {return _vec;}
+
+	// Iterator<T>&	operator++();
+	template <typename T>
+	typename Vector<T>::Iterator&	Vector<T>::Iterator::operator++()
 	{
-       for (auto itr = begin(); itr != end(); itr++)
-	   {
-			std::cout << *itr << " " << std::endl;
-	   }
-    }
+		if(_vec)
+			_vec++;
+		return *this;
+	}
+
+	// Iterator<T>	operator++(int);
+	template <typename T>
+	typename Vector<T>::Iterator	Vector<T>::Iterator::operator++(int)
+	{
+		Iterator	temp = *this;
+		++(*this);
+		return temp;
+	}
+
+	// bool	operator==(const Iterator<T>&) const;
+	template <typename T>
+	bool	Vector<T>::Iterator::operator== (const Vector<T>::Iterator& other) const
+	{
+		return (this->_vec == other._vec);
+	}
+
+	// bool	operator!=(const Iterator<T>&) const;
+	template <typename T>
+	bool	Vector<T>::Iterator::operator!= (const Vector<T>::Iterator& other) const
+	{
+		return (this->_vec != other._vec);
+	}
+
+
+	template <typename T>
+	typename Vector<T>::Iterator	Vector<T>::begin() const
+	{
+		if(_vector)
+			return Iterator(_vector);
+		else
+			return Iterator(nullptr);
+	}
+
+	template <typename T>
+	typename Vector<T>::Iterator	Vector<T>::end() const
+	{
+		if(_vector)
+			return Iterator(&_vector[_size]);
+		else
+			return Iterator(nullptr);
+	}
+
+	template <typename T>
+	typename Vector<T>::Iterator Vector<T>::Iterator::operator+(int n) const
+	{
+		Iterator temp = *this;
+		temp._vec += n;
+		return temp;
+	}
+
+	template <typename T>
+	typename Vector<T>::Iterator Vector<T>::Iterator::operator-(int n) const
+	{
+		Iterator temp = *this;
+		temp._vec -= n;
+		return temp;
+	}
+
+	template <typename T>
+	bool Vector<T>::Iterator::operator>(const Iterator& other) const
+	{
+		return _vec > other._vec;
+	}
 
 } // namespace my
 
