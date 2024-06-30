@@ -27,6 +27,8 @@ namespace my
 			bool	push_front(const T&);
 			bool	pop_front();
 			bool	insert(const T&, const size_t&);
+			void	resize(const size_t&);
+        	void	reserve(const size_t&);
 
 		class	Iterator
 		{
@@ -35,30 +37,30 @@ namespace my
 				~Iterator();
 
 			public:
-				T&	operator*();
-				T*	operator->();
+				T&			operator*();
+				T*			operator->();
 				Iterator&	operator++();
 				Iterator	operator++(int);
-				bool	operator==(const Iterator&) const;
-				bool	operator!=(const Iterator&) const;
+				bool		operator==(const Iterator&) const;
+				bool		operator!=(const Iterator&) const;
 
 			public:
-				Iterator operator+(int n) const;
-				Iterator operator-(int n) const;
-				bool operator>(const Iterator& other) const;
+				Iterator	operator+(int n) const;
+				Iterator	operator-(int n) const;
+				bool		operator>(const Iterator& other) const;
 
 			private:
-				T* _vec;
+				T*	_vec;
 		};
 
-		bool	pop(Iterator);
+		bool		pop(Iterator);
 		Iterator	begin() const;
 		Iterator	end() const;
 
 		private:
 			size_t	_size;
 			size_t	_capacity;
-			T*	_vector = nullptr;
+			T*		_vector = nullptr;
 	};
 
 	template <typename T>
@@ -264,6 +266,40 @@ namespace my
 		}
 		return status;
 	}
+
+	template<typename T>
+    void Vector<T>::resize(const size_t& newSize)
+    {
+        if (newSize < _size)
+        {
+            _size = newSize;
+        }
+        else if (newSize > _capacity)
+        {
+            reserve(newSize);
+            _size = newSize;
+        }
+        else
+        {
+            _size = newSize;
+        }
+    }
+
+    template<typename T>
+    void Vector<T>::reserve(const size_t& newCapacity)
+    {
+        if (newCapacity > _capacity)
+        {
+            T* new_vector = new T[newCapacity];
+            for (size_t i = 0; i < _size; ++i)
+            {
+                new_vector[i] = _vector[i];
+            }
+            delete[] _vector;
+            _vector = new_vector;
+            _capacity = newCapacity;
+        }
+    }
 
 	template <typename T>
 	bool	Vector<T>::pop(Vector<T>::Iterator itr)
