@@ -47,6 +47,14 @@ int main()
     std::cout << "Vector: ";
 	printVec(v);
 
+	// v.reserve(20);
+    // std::cout << "After reserve(20): ";
+    // printVec(v);
+
+	// v.resize(8);
+    // std::cout << "After resize(8): ";
+    // printVec(v);
+
     // v.pop_back();
     // std::cout << "After pop_back: ";
     // printVec(v);

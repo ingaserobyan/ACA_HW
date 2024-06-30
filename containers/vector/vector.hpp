@@ -53,9 +53,10 @@ namespace my
 				T*	_vec;
 		};
 
-		bool		pop(Iterator);
-		Iterator	begin() const;
-		Iterator	end() const;
+		public:
+			bool		pop(Iterator);
+			Iterator	begin() const;
+			Iterator	end() const;
 
 		private:
 			size_t	_size;
