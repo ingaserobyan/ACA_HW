@@ -76,7 +76,7 @@ namespace my
             _vector[index] = *it;
 			index++;
         }
-    }
+	}
 
 	template <typename T>
 	Vector<T>::Vector(const size_t& size) : _size(size), _capacity(2*_size), _vector(new T[_capacity]) {}
