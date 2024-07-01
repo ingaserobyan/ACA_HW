@@ -295,7 +295,7 @@ namespace my
 		if (itr == begin())
 		{
 			pop_front();
-			itr = begin(); // Update iterator to point to the new head
+			itr = begin();
 			return;
 		}
 
