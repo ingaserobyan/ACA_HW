@@ -18,7 +18,4 @@ class Car {
 		int			_year;
 };
 
-// Specialize std::hash for the Car class
-
-
 #endif // __CAR_H__
