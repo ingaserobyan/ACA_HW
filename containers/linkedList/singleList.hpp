@@ -308,8 +308,8 @@ namespace my
 		if (previous != end())
 		{
 			previous->_next = itr->_next;
-			delete &(*itr); // Delete the node pointed to by itr
-			itr = previous; // Update iterator to point to the next element
+			delete &(*itr);
+			itr = previous;
 		}
 	}
 } // my
